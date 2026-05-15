@@ -1,0 +1,12 @@
+/* Global resets and scrollbar styling */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+html { scroll-behavior: smooth; }
+
+button { font-family: inherit; }
+input  { font-family: inherit; }
