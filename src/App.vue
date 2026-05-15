@@ -60,28 +60,23 @@ setInterval(() => { clock.value = new Date().toUTCString().slice(17, 25) }, 1000
 
         <!-- Metric Cards -->
         <section class="metric-grid" aria-label="Live metric cards">
-          <MetricCard
-            v-for="stream in store.streams"
-            :key="stream.id"
-            :stream="stream"
-            :active="store.controls.activeStreams.includes(stream.id)"
-            @toggle="store.toggleStream"
-          />
+          <MetricCard v-for="stream in store.streams" :key="stream.id" :stream="stream"
+            :active="store.controls.activeStreams.includes(stream.id)" @toggle="store.toggleStream" />
         </section>
 
         <!-- Line + Bar charts -->
         <section class="charts-row" aria-label="Primary charts">
-          <div class="chart-main"><LineChart /></div>
-          <div class="chart-side"><BarChart /></div>
+          <div class="chart-main">
+            <LineChart />
+          </div>
+          <div class="chart-side">
+            <BarChart />
+          </div>
         </section>
 
         <!-- Area charts grid -->
         <section class="area-grid" aria-label="Area charts">
-          <AreaChart
-            v-for="stream in areaStreams"
-            :key="stream.id"
-            :stream="stream"
-          />
+          <AreaChart v-for="stream in areaStreams" :key="stream.id" :stream="stream" />
         </section>
 
         <!-- Activity Feed -->
@@ -108,32 +103,39 @@ setInterval(() => { clock.value = new Date().toUTCString().slice(17, 25) }, 1000
 
 /* ── CSS Variables ── */
 :root {
-  --bg:             #020817;
-  --card-bg:        #0b1120;
-  --border:         #1e293b;
-  --hover-bg:       #0f172a;
-  --badge-bg:       #1e293b;
-  --text-primary:   #f1f5f9;
+  --bg: #020817;
+  --card-bg: #0b1120;
+  --border: #1e293b;
+  --hover-bg: #0f172a;
+  --badge-bg: #1e293b;
+  --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
-  --text-muted:     #475569;
-  --accent:         #6366f1;
-  --max-w:          80rem; /* 7xl = 1280px */
+  --text-muted: #475569;
+  --accent: #6366f1;
+  --max-w: 80rem;
+  /* 7xl = 1280px */
   font-family: 'Space Grotesk', sans-serif;
 }
 
 html.light {
-  --bg:             #f8fafc;
-  --card-bg:        #ffffff;
-  --border:         #e2e8f0;
-  --hover-bg:       #f1f5f9;
-  --badge-bg:       #f1f5f9;
-  --text-primary:   #0f172a;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --hover-bg: #f1f5f9;
+  --badge-bg: #f1f5f9;
+  --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted:     #94a3b8;
-  --accent:         #6366f1;
+  --text-muted: #94a3b8;
+  --accent: #6366f1;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: var(--bg);
@@ -143,7 +145,11 @@ body {
 }
 
 /* ── App shell ── */
-.app { display: flex; flex-direction: column; min-height: 100vh; }
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 /* ── Centered container used by header, main, footer ── */
 .header-inner,
@@ -172,18 +178,26 @@ body {
   padding-bottom: 0.875rem;
 }
 
-.header-brand { display: flex; align-items: center; gap: 0.75rem; }
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 
 .brand-logo {
-  width: 32px; height: 32px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .logo-dot {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 0 8px #fff8;
@@ -191,40 +205,115 @@ body {
 }
 
 @keyframes pulse-logo {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.3); opacity: 0.7; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
 }
 
-.brand-text   { display: flex; flex-direction: column; }
-.brand-name   { font-size: 1rem; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
-.brand-sub    { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
 
-.header-meta  { display: flex; align-items: center; gap: 0.75rem; }
-.clock        { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+.brand-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.clock {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
 
 .header-badge {
-  display: flex; align-items: center; gap: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   white-space: nowrap;
 }
 
-.header-badge.connected    { background: rgba(34,197,94,0.1);  color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
-.header-badge.connecting   { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
-.header-badge.disconnected { background: var(--badge-bg);      color: var(--text-muted); border: 1px solid var(--border); }
-.header-badge.error        { background: rgba(239,68,68,0.1);  color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+.header-badge.connected {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
 
-.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-.header-badge.connected .badge-dot { animation: blink-badge 1.2s infinite; }
+.header-badge.connecting {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.header-badge.disconnected {
+  background: var(--badge-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.header-badge.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.header-badge.connected .badge-dot {
+  animation: blink-badge 1.2s infinite;
+}
 
 @keyframes blink-badge {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.2; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
 }
 
 /* ── Main ── */
-.app-main { flex: 1; background: var(--bg); }
+.app-main {
+  flex: 1;
+  background: var(--bg);
+}
 
 .main-inner {
   display: flex;
@@ -245,23 +334,37 @@ body {
 .charts-row {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
+  height: 100%;
 }
 
-.chart-main { height: 320px; }
-.chart-side { height: 320px; }
+.charts-row>* {
+  min-width: 0;
+}
+
+.chart-main,
+.chart-side {
+  width: 100%;
+  height: 320px;
+}
 
 /* ── Area charts ── */
 .area-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.875rem;
 }
 
-.area-grid > * { height: 200px; }
+.area-grid>* {
+  min-width: 0;
+  overflow: hidden;
+  height: 200px;
+}
 
 /* ── Feed ── */
-.feed-section { height: 400px; }
+.feed-section {
+  height: 400px;
+}
 
 /* ── Footer ── */
 .app-footer {
@@ -284,47 +387,109 @@ body {
 
 /* ── Responsive: tablet (≤1024px) ── */
 @media (max-width: 1024px) {
-  .metric-grid { grid-template-columns: repeat(3, 1fr); }
+  .metric-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-  .charts-row  { grid-template-columns: 1fr; }
-  .chart-main  { height: 300px; }
-  .chart-side  { height: 280px; }
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
 
-  .area-grid   { grid-template-columns: repeat(2, 1fr); }
-  .area-grid > * { height: 200px; }
+  .chart-main {
+    height: 300px;
+    width: auto;
+  }
 
-  .feed-section { height: 380px; }
+  .chart-side {
+    height: 280px;
+  }
+
+  .area-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .area-grid>* {
+    height: 200px;
+  }
+
+  .feed-section {
+    height: 380px;
+  }
 }
 
 /* ── Responsive: large mobile (≤768px) ── */
 @media (max-width: 768px) {
+
   .header-inner,
   .main-inner,
-  .footer-inner { padding-left: 1rem; padding-right: 1rem; }
+  .footer-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
-  .clock        { display: none; }
+  .clock {
+    display: none;
+  }
 
-  .metric-grid  { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
 
-  .charts-row   { grid-template-columns: 1fr; }
-  .chart-main   { height: 260px; }
-  .chart-side   { height: 240px; }
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
 
-  .area-grid    { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-  .area-grid > * { height: 180px; }
+  .chart-main {
+    height: 320px;
+  }
 
-  .feed-section { height: 360px; }
+  .chart-side {
+    height: 320px;
+  }
 
-  .main-inner   { gap: 1rem; }
+  .area-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .area-grid>* {
+    height: 180px;
+  }
+
+  .feed-section {
+    height: 360px;
+  }
+
+  .main-inner {
+    gap: 1rem;
+  }
 }
 
 /* ── Responsive: small mobile (≤480px) ── */
 @media (max-width: 480px) {
-  .metric-grid  { grid-template-columns: 1fr; }
-  .area-grid    { grid-template-columns: 1fr; }
-  .area-grid > * { height: 160px; }
-  .chart-main   { height: 220px; }
-  .chart-side   { height: 200px; }
-  .feed-section { height: 320px; }
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .area-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .area-grid>* {
+    height: 160px;
+  }
+
+  .chart-main {
+    height: 320px;
+  }
+
+  .chart-side {
+    height: 320px;
+  }
+
+  .feed-section {
+    height: 320px;
+  }
 }
 </style>
